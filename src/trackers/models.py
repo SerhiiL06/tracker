@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from slugify import slugify
@@ -19,6 +18,9 @@ class Campaign(models.Model):
 
     is_complete = models.BooleanField(default=False)
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Offer(models.Model):
 
@@ -38,12 +40,16 @@ class Offer(models.Model):
     def offer_link(self):
         return reverse("trackers:offer", kwargs={"slug": self.slug})
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Lead(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    ip_address = models.CharField()
+    ip_address = models.CharField(unique=True)
     agent = models.CharField()
+
+    is_hot = models.BooleanField(default=False)
 
 
 class Click(models.Model):
@@ -55,3 +61,6 @@ class Click(models.Model):
     click_on = models.DateTimeField(auto_now_add=True)
 
     interest_level = models.CharField(choices=Interests.choices, default=Interests.low)
+
+    def __str__(self) -> str:
+        return f"{self.lead} click {self.offer}"

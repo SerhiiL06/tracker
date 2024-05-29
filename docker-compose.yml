@@ -1,26 +1,25 @@
-version: '3.7'
-
-
+version: "3.7"
 services:
-  django:
-   build:
-    context: .
-   container_name: tracker_backend
-   env_file: .env
-   ports:
-     - 8000:8000
-   volumes:
-     - .:/app
-   command: >
-      sh -c "python manage.py makemigrations && 
-              python manage.py migrate && 
-              python manage.py runserver 0.0.0.0:8000"
-   depends_on:
-    - db
+  web:
+    build:
+      context: .
+    env_file: .env
+    container_name: tracker_backend
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+
   db:
-   image: postgres:15.5-alpine3.19
-   restart: always
-   container_name: tracker_db
-   env_file: .env
-   expose:
-     - 5432
+    image: postgres:15.5-alpine3.19
+    container_name: tracker_db
+    restart: always
+    env_file: .env
+    command: -p 5432
+    expose:
+      - 5432
+    
+
