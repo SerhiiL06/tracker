@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from slugify import slugify
 
-from .common import Interests
+from .common import ClickAction, Interests
 
 
 class Campaign(models.Model):
@@ -53,14 +53,18 @@ class Lead(models.Model):
 
 
 class Click(models.Model):
-
-    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, null=True)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, null=True)
 
     lead = models.ForeignKey(Lead, on_delete=models.SET_NULL, null=True)
 
     click_on = models.DateTimeField(auto_now_add=True)
 
-    interest_level = models.CharField(choices=Interests.choices, default=Interests.low)
+    interest_level = models.CharField(choices=Interests.choices, default=Interests.LOW)
+
+    action = models.CharField(
+        choices=ClickAction.choices, default=ClickAction.CAMPAIGN_LIST
+    )
 
     def __str__(self) -> str:
         return f"{self.lead} click {self.offer}"
