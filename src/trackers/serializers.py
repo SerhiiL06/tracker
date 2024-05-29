@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Campaign, Lead, Offer
+from .models import Campaign, Click, Lead, Offer
 
 
 class CampaignListSerializer(serializers.ModelSerializer):
@@ -25,4 +25,10 @@ class OfferListSerializer(serializers.ModelSerializer):
 class LeadListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lead
+        fields = "__all__"
+
+
+class ClickListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Click
         fields = "__all__"

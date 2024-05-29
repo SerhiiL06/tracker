@@ -4,9 +4,10 @@ from . import views
 
 router = SimpleRouter()
 
-router.register("campaigns", views.CampaignViewSet)
-router.register("offers", views.OfferViewSet)
-router.register("leads", views.LeadViewSet)
+router.register("campaigns", views.CampaignViewSet, basename="campaigns")
+router.register("offers", views.OfferViewSet, basename="offers")
+router.register("leads", views.LeadViewSet, basename="leads")
+router.register("clicks", views.ClickViewSet)
 
 urlpatterns = []
 

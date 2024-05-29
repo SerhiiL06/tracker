@@ -21,6 +21,9 @@ class Campaign(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    class Meta:
+        ordering = ["-created_at"]
+
 
 class Offer(models.Model):
 
@@ -38,16 +41,20 @@ class Offer(models.Model):
 
     @property
     def offer_link(self):
-        return reverse("trackers:offer", kwargs={"slug": self.slug})
+        return reverse("offers-detail", kwargs={"slug": self.slug})
 
     def __str__(self) -> str:
         return self.title
+
+    class Meta:
+        ordering = ["-created_at"]
 
 
 class Lead(models.Model):
 
     ip_address = models.CharField(unique=True)
     agent = models.CharField()
+    os = models.CharField(null=True)
 
     is_hot = models.BooleanField(default=False)
 
