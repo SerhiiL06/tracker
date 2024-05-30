@@ -1,9 +1,9 @@
 version: "3.7"
 services:
-  web:
+  backend:
     build:
-      context: .
-    env_file: .env
+      context: ./backend
+    env_file: ./backend/.env
     container_name: tracker_backend
     ports:
       - 8000:8000
@@ -17,7 +17,7 @@ services:
     image: postgres:15.5-alpine3.19
     container_name: tracker_db
     restart: always
-    env_file: .env
+    env_file: ./backend/.env
     command: -p 5432
     volumes:
       - ./pgdata:/var/lib/postgresql/data
