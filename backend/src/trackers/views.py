@@ -1,13 +1,14 @@
 from datetime import datetime
 
-from rest_framework import viewsets
 from django_filters import rest_framework as filters
+from drf_spectacular import types
+from drf_spectacular.utils import (OpenApiExample, OpenApiParameter,
+                                   extend_schema)
+from rest_framework import viewsets
+from rest_framework.exceptions import MethodNotAllowed
 
 from . import serializers as sr
 from .models import Campaign, Click, Lead, Offer
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
-from drf_spectacular import types
-from rest_framework.exceptions import MethodNotAllowed
 
 
 class CampaignViewSet(viewsets.ModelViewSet):

@@ -1,9 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-
 from src.trackers.common import ClickAction, Interests
-from src.trackers.models import Campaign, Lead, Offer, Click
+from src.trackers.models import Campaign, Click, Lead, Offer
 
 
 class TestCampaignView(TestCase):
