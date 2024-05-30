@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from src.trackers.common import ClickAction, Interests
-from src.trackers.models import Campaign, Lead, Offer
+from src.trackers.models import Campaign, Lead, Offer, Click
 
 
 class TestCampaignView(TestCase):
@@ -48,6 +48,8 @@ class TestCampaignView(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(Campaign.objects.count(), 2)
 
+        self.assertEqual(Lead.objects.count(), 0)
+
     def test_get_campaign_list(self):
 
         response = self.client.get(reverse("campaigns-list"), **self.headers)
@@ -55,6 +57,13 @@ class TestCampaignView(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.json()), 1)
+
+        self.assertEqual(Lead.objects.count(), 1)
+
+        current_click = Click.objects.last()
+
+        self.assertEqual(current_click.interest_level, Interests.LOW)
+        self.assertEqual(current_click.action, ClickAction.CAMPAIGN_LIST)
 
 
 class TestOfferView(TestCase):
@@ -111,6 +120,10 @@ class TestOfferView(TestCase):
 
         self.assertEqual(Lead.objects.count(), 1)
 
+        current_click = Click.objects.last()
+        self.assertEqual(current_click.interest_level, Interests.MIDDLE)
+        self.assertEqual(current_click.action, ClickAction.OFFER_LIST)
+
     def test_get_offer(self):
         offer = Offer.objects.first()
 
@@ -119,3 +132,7 @@ class TestOfferView(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(Lead.objects.count(), 1)
+
+        current_click = Click.objects.last()
+        self.assertEqual(current_click.interest_level, Interests.HIGH)
+        self.assertEqual(current_click.action, ClickAction.OFFER_DETAIL)
