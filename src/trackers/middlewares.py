@@ -16,7 +16,6 @@ class TrackerMiddleware:
         response = self.get_response(request)
 
         action_type = self.get_action_type(request)
-
         lead_instance = self.get_or_create_lead(request)
 
         if action_type is None or lead_instance is None:
