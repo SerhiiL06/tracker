@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from rest_framework import viewsets
+from django_filters import rest_framework as filters
 
 from . import serializers as sr
 from .models import Campaign, Click, Lead, Offer
@@ -11,15 +12,18 @@ from rest_framework.exceptions import MethodNotAllowed
 
 class CampaignViewSet(viewsets.ModelViewSet):
     http_method_names = ["get", "post"]
-    queryset = Campaign.objects.filter(end_date__gte=datetime.now())
+    queryset = Campaign.objects.all()
     serializer_class = sr.CampaignListSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_fields = ["title"]
+    ordering_fields = ["end_date"]
 
     def get_queryset(self):
 
         if self.request.GET.get("full", False):
-            return Campaign.objects.all()
+            return super().get_queryset()
 
-        return super().get_queryset()
+        return Campaign.objects.filter(end_date__gte=datetime.now())
 
     @extend_schema(
         description="This endpoint retrieves a list of campaigns.",
@@ -31,7 +35,20 @@ class CampaignViewSet(viewsets.ModelViewSet):
                 ),
                 required=False,
                 type=types.OpenApiTypes.BOOL,
-            )
+            ),
+            OpenApiParameter(
+                "title",
+                description="searching by title text",
+                type=types.OpenApiTypes.STR,
+                required=False,
+            ),
+            OpenApiParameter(
+                "ordering",
+                description="order by end date",
+                examples=[OpenApiExample("end_date", "-end_date")],
+                type=types.OpenApiTypes.DATE,
+                required=False,
+            ),
         ],
         tags=["campaigns"],
     )
