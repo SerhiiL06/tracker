@@ -1,0 +1,1 @@
+[{"model": "trackers.lead", "pk": 2, "fields": {"ip_address": "192.168.65.1", "agent": "Mozilla/5.0", "os": "(Macintosh; Intel Mac OS X 10_15_7)", "is_hot": false}}]

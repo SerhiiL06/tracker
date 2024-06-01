@@ -1,5 +1,4 @@
 from datetime import datetime
-from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from drf_spectacular import types
 from drf_spectacular.utils import OpenApiExample, OpenApiParameter, extend_schema
