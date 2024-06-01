@@ -1,28 +1,30 @@
-.campaigns-table {
+.clicks-table {
     width: 100%;
     border-collapse: collapse;
+    padding-right: 20px;
 }
 
-.campaigns-table th,
-.campaigns-table td {
+
+.clicks-table th,
+.clicks-table td {
     padding: 8px;
     border: 1px solid #ddd;
     text-align: left;
 }
 
-.campaigns-table th {
+.clicks-table th {
     background-color: #f2f2f2;
 }
 
-.campaigns-table tr:nth-child(even) {
+.clicks-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.campaigns-table tr:hover {
+.clicks-table tr:hover {
     background-color: #ddd;
 }
 
-.campaigns-button {
+.clicks-button {
     background-color: aquamarine;
     margin-top: 5px;
     margin-bottom: 5px;

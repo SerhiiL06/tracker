@@ -1,12 +1,11 @@
 from datetime import datetime
-
+from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from drf_spectacular import types
-from drf_spectacular.utils import (OpenApiExample, OpenApiParameter,
-                                   extend_schema)
+from drf_spectacular.utils import OpenApiExample, OpenApiParameter, extend_schema
 from rest_framework import viewsets
 from rest_framework.exceptions import MethodNotAllowed
-
+from .paginators import ClickPaginator
 from . import serializers as sr
 from .models import Campaign, Click, Lead, Offer
 
@@ -101,8 +100,19 @@ class LeadViewSet(viewsets.ModelViewSet):
 
 class ClickViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
-    queryset = Click.objects.all()
+    queryset = Click.objects.select_related("lead")
+    pagination_class = ClickPaginator
     serializer_class = sr.ClickListSerializer
+
+    def get_queryset(self):
+        params = self.request.GET
+        queryset = super().get_queryset()
+
+        if params.get("ordering"):
+
+            queryset = queryset.order_by(params.get("ordering"))
+
+        return queryset
 
     @extend_schema(exclude=True)
     def retrieve(self, request, *args, **kwargs):

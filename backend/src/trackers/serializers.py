@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Campaign, Click, Lead, Offer
+from datetime import datetime
 
 
 class CampaignListSerializer(serializers.ModelSerializer):
@@ -29,6 +30,25 @@ class LeadListSerializer(serializers.ModelSerializer):
 
 
 class ClickListSerializer(serializers.ModelSerializer):
+    lead_info = serializers.SerializerMethodField()
+    click_on = serializers.SerializerMethodField()
+
     class Meta:
         model = Click
-        fields = "__all__"
+        fields = [
+            "id",
+            "campaign",
+            "offer",
+            "lead",
+            "lead_info",
+            "click_on",
+            "interest_level",
+            "action",
+        ]
+
+    def get_lead_info(self, obj):
+        return obj.lead.ip_address
+
+    def get_click_on(self, obj):
+        datetime
+        return obj.click_on.ctime()

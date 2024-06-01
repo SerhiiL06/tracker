@@ -75,3 +75,6 @@ class Click(models.Model):
 
     def __str__(self) -> str:
         return f"{self.lead} click {self.offer}"
+
+    class Meta:
+        ordering = ["-click_on"]
