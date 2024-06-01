@@ -16,10 +16,6 @@ function Campaigns() {
             selector: row => row.title,
             sortable: true,
         },
-        // {
-        //     name: 'Year',
-        //     selector: row => row.year,
-        // },
     ];
 
     useEffect(() => {

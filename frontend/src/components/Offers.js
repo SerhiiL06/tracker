@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import OffersTable from './OffersTable';
 
+
 function Offers() {
     const location = useLocation()
     const queryParams = queryString.parse(location.search);

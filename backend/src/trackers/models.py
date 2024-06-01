@@ -27,7 +27,7 @@ class Campaign(models.Model):
 
 class Offer(models.Model):
 
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, unique=True)
     slug = models.CharField()
     description = models.TextField(max_length=1000)
 
