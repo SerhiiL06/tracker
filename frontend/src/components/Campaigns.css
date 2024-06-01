@@ -1,0 +1,23 @@
+.campaigns-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.campaigns-table th,
+.campaigns-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.campaigns-table th {
+    background-color: #f2f2f2;
+}
+
+.campaigns-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.campaigns-table tr:hover {
+    background-color: #ddd;
+}

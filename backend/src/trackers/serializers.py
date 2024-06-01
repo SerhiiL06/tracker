@@ -6,7 +6,7 @@ from .models import Campaign, Click, Lead, Offer
 class CampaignListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
-        fields = ["title", "description", "start_date", "end_date"]
+        fields = "__all__"
 
 
 class OfferListSerializer(serializers.ModelSerializer):

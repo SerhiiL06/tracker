@@ -81,6 +81,13 @@ class OfferViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        camp_id = self.request.GET.get("camp_id")
+        if self.action == "list" and camp_id:
+            return queryset.filter(campaign_id=camp_id)
+        return queryset
+
 
 class LeadViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
