@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "src.trackers",
+    "src.statistic",
     "drf_spectacular",
 ]
 
