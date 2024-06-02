@@ -12,5 +12,5 @@ urlpatterns = [
         name="swagger-ui",
     ),
     path("api/v1/", include("src.trackers.urls")),
-    path("api/v1/t/", include("src.statistic.urls")),
+    path("api/v1/statistic/", include("src.statistic.urls")),
 ]

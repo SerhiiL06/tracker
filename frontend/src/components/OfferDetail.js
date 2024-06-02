@@ -24,7 +24,7 @@ function OfferDetail() {
 
     console.log(offerData)
 
-    return <div><h1>Title</h1> {notFound ? offerData.title : <h1>Not found</h1>}</div>
+    return <div><h1>Title</h1> {notFound ? <h1>Not found</h1> : offerData.title}</div>
 }
 
 export default OfferDetail;

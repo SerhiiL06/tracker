@@ -1,10 +1,13 @@
-from rest_framework import viewsets
-from rest_framework.decorators import action
-from src.trackers.models import Campaign, Click, Lead, Offer
-from rest_framework.response import Response
 from django.db.models import Count
 from django.db.models.functions import TruncDay
-from .serializers import ClickPerDaySerializer, InterestLevelCountSerializer
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from src.trackers.models import Campaign, Click, Lead, Offer
+
+from .serializers import (ClickPerDaySerializer, ClickPerOfferSerializer,
+                          InterestLevelCountSerializer)
 
 
 class StatisticViewSet(viewsets.GenericViewSet):
@@ -37,16 +40,10 @@ class StatisticViewSet(viewsets.GenericViewSet):
         return Response(serializer.data, 200)
 
     @action(methods=["get"], detail=False, url_path="clicks-per-campaigns")
-    def sum_click_per_campaigns(self, request, *args, **kwargs):
+    def sum_click_per_offers(self, request, *args, **kwargs):
 
-        q = Campaign.objects.select_related("camp_click").annotate(
-            count=Count("camp_click")
-        )
-
-        for e in q:
-
-            print(e.count)
-        serializer = ClickPerDaySerializer(q, many=True)
+        q = Offer.objects.annotate(count=Count("offer_click")).filter(count__gt=0)
+        serializer = ClickPerOfferSerializer(q, many=True)
 
         return Response(serializer.data, 200)
 

@@ -1,7 +1,8 @@
+from django.urls import resolve
+
+from .common import ClickAction
 from .mixins import TrackMiddlewareMixin
 from .models import Click, Offer
-from .common import ClickAction
-from django.urls import resolve
 
 
 class TrackerMiddleware(TrackMiddlewareMixin):

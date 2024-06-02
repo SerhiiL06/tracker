@@ -1,7 +1,9 @@
+import re
+
+from django.urls import resolve
+
 from .common import ClickAction, Interests
 from .models import Click, Lead
-import re
-from django.urls import resolve
 
 
 class TrackMiddlewareMixin:

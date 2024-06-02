@@ -1,7 +1,8 @@
+from datetime import datetime
+
 from rest_framework import serializers
 
 from .models import Campaign, Click, Lead, Offer
-from datetime import datetime
 
 
 class CampaignListSerializer(serializers.ModelSerializer):

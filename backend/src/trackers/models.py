@@ -65,7 +65,9 @@ class Click(models.Model):
     campaign = models.ForeignKey(
         Campaign, on_delete=models.CASCADE, null=True, related_name="camp_click"
     )
-    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, null=True)
+    offer = models.ForeignKey(
+        Offer, on_delete=models.CASCADE, null=True, related_name="offer_click"
+    )
 
     lead = models.ForeignKey(Lead, on_delete=models.SET_NULL, null=True)
 

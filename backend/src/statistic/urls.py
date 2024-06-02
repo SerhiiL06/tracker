@@ -1,13 +1,13 @@
-from rest_framework.routers import SimpleRouter
-from . import views
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 
+from . import views
 
 urlpatterns = [
     path("", views.StatisticViewSet.as_view({"get": "sum_clicks_per_day"})),
     path(
-        "clicks-per-camp/",
-        views.StatisticViewSet.as_view({"get": "sum_click_per_campaigns"}),
+        "clicks-per-offer/",
+        views.StatisticViewSet.as_view({"get": "sum_click_per_offers"}),
     ),
     path(
         "click-per-interest-level/",

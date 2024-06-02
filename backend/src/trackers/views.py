@@ -1,12 +1,15 @@
 from datetime import datetime
+
 from django_filters import rest_framework as filters
 from drf_spectacular import types
-from drf_spectacular.utils import OpenApiExample, OpenApiParameter, extend_schema
+from drf_spectacular.utils import (OpenApiExample, OpenApiParameter,
+                                   extend_schema)
 from rest_framework import viewsets
 from rest_framework.exceptions import MethodNotAllowed
-from .paginators import ClickPaginator
+
 from . import serializers as sr
 from .models import Campaign, Click, Lead, Offer
+from .paginators import ClickPaginator
 
 
 class CampaignViewSet(viewsets.ModelViewSet):
