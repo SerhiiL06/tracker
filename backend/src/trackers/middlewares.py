@@ -1,5 +1,7 @@
 from .mixins import TrackMiddlewareMixin
-from .models import Click
+from .models import Click, Offer
+from .common import ClickAction
+from django.urls import resolve
 
 
 class TrackerMiddleware(TrackMiddlewareMixin):
@@ -23,10 +25,18 @@ class TrackerMiddleware(TrackMiddlewareMixin):
 
         interest_level_click = self.get_interest_level(action_type)
 
+        offer = None
+
+        slug = resolve(request.path).kwargs.get("slug", None)
+
+        if action_type == ClickAction.OFFER_DETAIL:
+            offer = Offer.objects.get(slug=slug)
+
         Click.objects.create(
             lead=lead_instance,
             interest_level=interest_level_click,
             action=action_type,
+            offer=offer,
         )
 
         return response

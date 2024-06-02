@@ -56,11 +56,15 @@ class Lead(models.Model):
     agent = models.CharField()
     os = models.CharField(null=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
     is_hot = models.BooleanField(default=False)
 
 
 class Click(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, null=True)
+    campaign = models.ForeignKey(
+        Campaign, on_delete=models.CASCADE, null=True, related_name="camp_click"
+    )
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, null=True)
 
     lead = models.ForeignKey(Lead, on_delete=models.SET_NULL, null=True)
