@@ -13,7 +13,7 @@ function Offers() {
 
     const requestUrl = 'http://localhost:8000/api/v1/offers/'
     const [offersData, setOffersData] = useState([])
-    console.log(requestUrl)
+
     useEffect(() => {
         fetchOffersData();
     }, []);

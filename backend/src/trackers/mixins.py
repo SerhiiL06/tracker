@@ -3,7 +3,7 @@ import re
 from django.urls import resolve
 
 from .common import ClickAction, Interests
-from .models import Click, Lead
+from .models import Lead
 
 
 class TrackMiddlewareMixin:
@@ -30,22 +30,15 @@ class TrackMiddlewareMixin:
 
     def get_action_type(cls, request):
 
-        action_type = None
         url_name = resolve(request.path).url_name
+        action_types = {
+            "campaigns-list": ClickAction.CAMPAIGN_LIST,
+            "campaigns-detail": ClickAction.CAMPAIGN_DETAIL,
+            "offers-list": ClickAction.OFFER_LIST,
+            "offers-detail": ClickAction.OFFER_DETAIL,
+        }
 
-        if url_name == "campaigns-list":
-            action_type = ClickAction.CAMPAIGN_LIST
-
-        elif url_name == "campaigns-detail":
-            action_type = ClickAction.CAMPAIGN_DETAIL
-
-        elif url_name == "offers-list":
-            action_type = ClickAction.OFFER_LIST
-
-        elif url_name == "offers-detail":
-            action_type = ClickAction.OFFER_DETAIL
-
-        return action_type
+        return action_types.get(url_name, None)
 
     def get_interest_level(cls, action: ClickAction):
 

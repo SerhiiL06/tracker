@@ -3,13 +3,13 @@ from django.db.models.functions import TruncDay
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, extend_schema_view
+from src.trackers.models import Click, Lead, Offer
 
-from src.trackers.models import Campaign, Click, Lead, Offer
-
-from .serializers import (ClickPerDaySerializer, ClickPerOfferSerializer,
-                          InterestLevelCountSerializer)
+from . import serializers as sr
 
 
+@extend_schema_view(list=extend_schema(tags=["statistic"]))
 class StatisticViewSet(viewsets.GenericViewSet):
     queryset = Click.objects.all()
 
@@ -22,7 +22,7 @@ class StatisticViewSet(viewsets.GenericViewSet):
             .annotate(count=Count("id"))
         )
 
-        serializer = ClickPerDaySerializer(q, many=True)
+        serializer = sr.ClickPerDaySerializer(q, many=True)
 
         return Response(serializer.data, 200)
 
@@ -35,7 +35,7 @@ class StatisticViewSet(viewsets.GenericViewSet):
             .annotate(count=Count("id"))
         )
 
-        serializer = ClickPerDaySerializer(q, many=True)
+        serializer = sr.ClickPerDaySerializer(q, many=True)
 
         return Response(serializer.data, 200)
 
@@ -43,7 +43,7 @@ class StatisticViewSet(viewsets.GenericViewSet):
     def sum_click_per_offers(self, request, *args, **kwargs):
 
         q = Offer.objects.annotate(count=Count("offer_click")).filter(count__gt=0)
-        serializer = ClickPerOfferSerializer(q, many=True)
+        serializer = sr.ClickPerOfferSerializer(q, many=True)
 
         return Response(serializer.data, 200)
 
@@ -57,6 +57,6 @@ class PieceStatisticViewSet(viewsets.GenericViewSet):
         result = Click.objects.values("interest_level").annotate(
             total=Count("interest_level")
         )
-        serialiazer = InterestLevelCountSerializer(result, many=True)
+        serialiazer = sr.InterestLevelCountSerializer(result, many=True)
 
         return Response(serialiazer.data, 200)

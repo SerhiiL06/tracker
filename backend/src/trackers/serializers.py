@@ -51,5 +51,4 @@ class ClickListSerializer(serializers.ModelSerializer):
         return obj.lead.ip_address
 
     def get_click_on(self, obj):
-        datetime
         return obj.click_on.ctime()

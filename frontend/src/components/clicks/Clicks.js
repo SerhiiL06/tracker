@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Clicks.css'
-import Filter from './Filter';
+import Filter from '../Filter'
 
 
 function Clicks() {
@@ -42,12 +42,6 @@ function Clicks() {
         }
     }
 
-    function setOrdering(event) {
-        const ord = event.target.value
-
-        console.log(ord)
-        changeOrderBy(ord)
-    }
     return (
         <div>
             <h1>Clicks Data</h1>
@@ -76,9 +70,6 @@ function Clicks() {
                     {nextPage && (
                         <button onClick={fetchNextPage}>Load More</button>
                     )}
-                </div>
-                <div>
-                    <Filter setOrdering={setOrdering} />
                 </div>
             </div>
         </div>
