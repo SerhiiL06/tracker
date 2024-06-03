@@ -62,7 +62,7 @@ function Clicks() {
                                     <td>{click.click_on}</td>
                                     <td>{click.interest_level}</td>
                                     <td>{click.lead_info}</td>
-                                    <td>{click.end_date}</td>
+                                    <td>{click.action}</td>
                                 </tr>
                             ))}
                         </tbody>
