@@ -48,6 +48,7 @@ class StatisticViewSet(viewsets.GenericViewSet):
         return Response(serializer.data, 200)
 
 
+@extend_schema_view(list=extend_schema(tags=["statistic"]))
 class PieceStatisticViewSet(viewsets.GenericViewSet):
     queryset = Click.objects.all()
 

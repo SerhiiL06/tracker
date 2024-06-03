@@ -2,8 +2,7 @@ from datetime import datetime
 
 from django_filters import rest_framework as filters
 from drf_spectacular import types
-from drf_spectacular.utils import (OpenApiExample, OpenApiParameter,
-                                   extend_schema)
+from drf_spectacular.utils import OpenApiExample, OpenApiParameter, extend_schema
 from rest_framework import viewsets
 from rest_framework.exceptions import MethodNotAllowed
 
@@ -95,6 +94,10 @@ class LeadViewSet(viewsets.ModelViewSet):
     queryset = Lead.objects.all()
     serializer_class = sr.LeadListSerializer
 
+    @extend_schema(tags=["leads"])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
     @extend_schema(exclude=True)
     def retrieve(self, request, *args, **kwargs):
         raise MethodNotAllowed("GET")
@@ -105,6 +108,10 @@ class ClickViewSet(viewsets.ModelViewSet):
     queryset = Click.objects.select_related("lead")
     pagination_class = ClickPaginator
     serializer_class = sr.ClickListSerializer
+
+    @extend_schema(tags=["clicks"])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def get_queryset(self):
         params = self.request.GET
